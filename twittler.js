@@ -1,43 +1,51 @@
-var TwittlerView = (function () {
-  var createBody = function() {
-    var $body = $('body');
-    $body.html('');
-    return $body;
-  };
+Twittler = (function () {
 
-  var injectStream = function ($body) {
-    var index = streams.home.length - 1;
-
-    while(index >= 0) {
-      var tweet = streams.home[index];
-      var $tweet = $('<div></div>');
-      $tweet.text('@' + tweet.user + ': ' + tweet.message);
+  // private methods
+  var priv = {
+    createBody: function() {
+      var $body = $('body');
+      $body.html('');
+      return $body;
+    },
+    createTweet: function ($body, tweet) {
+      var $tweet = $('<div class="tweet"></div>');
+      $tweet.html('<p><span class="user">' + '@' + tweet.user + '</span>: ' + tweet.message + " | " + tweet.created_at + '</p>');
       $tweet.appendTo($body);
-      index -= 1;
+    },
+    injectStream: function ($body, stream) {
+      for (var index = stream.length - 1; index >= 0; index--) {
+        this.createTweet($body, stream[index]);
+      }
+    },
+    getUser: function (e) {
+      var txt = $(e.target).text();
+      return txt.match(/@/) ? txt.replace(/@/, "") : txt.replace("New Tweets for ", "");
+    },
+    renderTimeline: function (e) {
+      var user = priv.getUser(e);
+      var $body = priv.createBody();
+      $body.html('<a href="index.html">Home</a><br /><br /><button type="submit" class="loadMoreUserTweets">New Tweets for ' + user + '</button>');
+      priv.injectStream($body, streams.users[user]);
+    },
+    bindEvents: function (e) {
+      $(document).on('click', '.tweet, .loadMoreUserTweets', priv.renderTimeline);
+      $(document).on('click', '.loadMoreTweets', app.run);
     }
   };
 
-  return {
-    initView: function () {
-      var body = createBody();
-      injectStream(body);
+  // public twittler interface
+  var app = {
+    run: function () {
+      var $body = priv.createBody();
+      $body.html('<button type="submit" class="loadMoreTweets">Load New Tweets</button>');
+      priv.injectStream($body, streams.home);
+      priv.bindEvents();
     }
-  }
-})();
-
-var TwittlerCtrl = (function () {
-  var init = function (view) {
-    view.initView();
   };
 
-  return {
-    runApp: function () {
-      init(TwittlerView);
-    }
-  }
+  // expose public twittler interface
+  return app;
 })();
 
 // App Runner
-$(function () {
-  TwittlerCtrl.runApp();
-});
+$(function () { Twittler.run(); });
