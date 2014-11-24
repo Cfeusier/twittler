@@ -1,0 +1,8 @@
+span.user {
+    text-decoration: underline;
+    color: gray;
+}
+
+span.user:hover {
+    color: green;
+}
