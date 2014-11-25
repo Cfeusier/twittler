@@ -1,8 +1,55 @@
+body {
+    background-color: #E8E8E8;
+}
+
+.container {
+    max-width: 860px;
+    background-color: white;
+    margin: 0 auto;
+    border-radius: 4px;
+    border: 1px solid #194719;
+    padding: 20px;
+}
+
+.main {
+    margin: 0 auto;
+    width: 78%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 38pt;
+    color: #194719;
+    text-shadow: 4px 3px 0px #fff, 6px 4px 0px rgba(0,0,0,0.15);
+}
+
+.timestamp {
+    font-size: 9pt;
+    font-style: italic;
+}
+
+.message {
+    font-size: 15pt;
+}
+
+button {
+    background-color: #194719;
+    color: white;
+    border: 2px solid white;
+    width: 150px;
+    height: 40px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
 span.user {
     text-decoration: underline;
-    color: gray;
+    color: #194719;
 }
 
 span.user:hover {
-    color: green;
+    color: #000;
+    cursor: pointer;
 }

@@ -3,13 +3,13 @@ Twittler = (function () {
   // private methods
   var priv = {
     createBody: function() {
-      var $body = $('body');
+      var $body = $('.main');
       $body.html('');
       return $body;
     },
     createTweet: function ($body, tweet) {
       var $tweet = $('<div class="tweet"></div>');
-      $tweet.html('<p><span class="user">' + '@' + tweet.user + '</span>: ' + tweet.message + " | " + tweet.created_at + '</p>');
+      $tweet.html('<p><span class="user">' + '@' + tweet.user + '</span>: <span class="message">' + tweet.message + "</span> | " + '<span class="timestamp">' + tweet.created_at + '</span></p>');
       $tweet.appendTo($body);
     },
     injectStream: function ($body, stream) {
